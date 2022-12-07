@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>ภาพรวมบัญชีของเรา</title>
+{% endblock %}
+
+{% block content %}
+    <canvas id="myReport"></canvas>
+{% endblock %}
+
+{% block footer %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myReport');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ["รายรับ","รายจ่าย"],
+            datasets: [{
+              label: 'ภาพรวมบัญชี',
+              data: ["{{income.amount__sum}}","{{expense.amount__sum}}"],
+              backgroundColor:["green","red"],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load humanize %}
+
+{% block title %}
+    <title>ข้อมูลบัญชีของเรา</title>
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+{% endblock %}
+
+{% block content %}
+    <h1 class="py-2 text-center">ข้อมูลบัญชีของเรา</h1>
+    <table id="myStatement" class="cell-border">
+        <thead>
+            <th>ชื่อรายการ</th>
+            <th>จำนวนเงิน</th>
+            <th>หมวดหมู่</th>
+        </thead>
+        <tbody>
+            {% for statement in data %}
+            <tr>
+                <td>{{statement.name}}</td>
+                <td>{{statement.amount | intcomma}}</td>
+                {% if statement.category == "income" %}
+                    <td>รายรับ</td>
+                {% else %}
+                    <td>รายจ่าย</td>
+                {% endif%}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+{% block footer %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#myStatement').DataTable({info:false});
+        });
+    </script>
+{% endblock %}
